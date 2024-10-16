@@ -77,7 +77,7 @@ module Airrecord
         new(fields).tap { |record| record.save(options) }
       end
 
-      def records(filter: nil, sort: nil, view: nil, offset: nil, paginate: true, fields: nil, max_records: nil, page_size: nil)
+      def records(filter: nil, sort: nil, view: nil, offset: nil, paginate: true, fields: nil, max_records: nil, page_size: nil, return_fields_by_field_id: false)
         options = {}
         options[:filterByFormula] = filter if filter
 
@@ -92,6 +92,7 @@ module Airrecord
         options[:fields] = fields if fields
         options[:maxRecords] = max_records if max_records
         options[:pageSize] = page_size if page_size
+        options[:returnFieldsByFieldId] = return_fields_by_field_id if return_fields_by_field_id
 
         path = "/v0/#{base_key}/#{client.escape(table_name)}/listRecords"
         response = client.connection.post(path, options.to_json, { 'Content-Type' => 'application/json' })
